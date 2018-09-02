@@ -1,30 +1,33 @@
+package org.warehouse.inventory;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 import java.util.Optional;
 
 import org.junit.Test;
+import org.warehouse.inventory.ExternInitialisedInventory;
+import org.warehouse.product.Product;
 
 import com.google.common.collect.Sets;
 
-public class InventoryTest {
+public class ExternInitialisedInventoryTest {
 	@Test
 	public void canBeCreatedEmpty() throws Exception {
-		new Inventory(null);
+		new ExternInitialisedInventory(null);
 	}
 	
 	@Test
 	public void canBeCreatedWithProductTypes() throws Exception {
-		ProductType pType = new ProductType("t1",  100);
+		Product pType = new Product("t1",  100);
 		
-		new Inventory(Sets.newHashSet(pType));
+		new ExternInitialisedInventory(Sets.newHashSet(pType));
 	}
 	
 	@Test
 	public void idNotAvailableNoProduct() throws Exception {
-		ProductType pType = new ProductType("t1",  100);
+		Product pType = new Product("t1",  100);
 		
-		Inventory inventory = new Inventory(Sets.newHashSet(pType));
+		Inventory inventory = new ExternInitialisedInventory(Sets.newHashSet(pType));
 		
 		Optional<Product> product = inventory.getProductById("t2");
 		
@@ -33,9 +36,9 @@ public class InventoryTest {
 	
 	@Test
 	public void idAvailableGetsProduct() throws Exception {
-		ProductType pType = new ProductType("t1",  100);
+		Product pType = new Product("t1",  100);
 		
-		Inventory inventory = new Inventory(Sets.newHashSet(pType));
+		Inventory inventory = new ExternInitialisedInventory(Sets.newHashSet(pType));
 		
 		Optional<Product> product = inventory.getProductById("t1");
 		
