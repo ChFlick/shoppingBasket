@@ -20,9 +20,6 @@ public class ExternInitialisedInventory implements Inventory {
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see org.warehouse.inventory.Inventory#getProductById(java.lang.String)
-	 */
 	@Override
 	public Optional<Product> getProductById(String id) {
 		return Optional.ofNullable(productTypesByProductId.get(id)).map(ProductType::createProduct);

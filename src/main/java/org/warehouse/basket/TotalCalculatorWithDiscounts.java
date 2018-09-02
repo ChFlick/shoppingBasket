@@ -1,42 +1,40 @@
 package org.warehouse.basket;
 
 import static java.util.stream.Collectors.toList;
-import static java.util.stream.Collectors.toUnmodifiableSet;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Consumer;
 
 import org.warehouse.discount.Discount;
-import org.warehouse.discount.DiscountTypes;
 import org.warehouse.product.Product;
 
 public class TotalCalculatorWithDiscounts implements TotalCalculator {
-	public long calculateTotalPriceInCents(Basket basket) {
-		List<Product> products = basket.getProducts();
+	public long calculateTotalPriceInCents(Collection<Product> products, 
+			Map<String, Set<Discount>> discountsByProductId) {
 		products.forEach(Product::initDiscountCalculation);
 
-		Map<String, Set<DiscountTypes>> discountsByProductId = basket.getDiscountsByProductId();
-
-		discountsByProductId.entrySet().stream().forEach(entry -> {
-			List<Product> viableProducts = getProductsWithProductId(products, entry.getKey());
-			Set<Discount> discounts = getDiscountsForDiscountTypes(entry.getValue());
-			applyDiscountsOnProducts(discounts, viableProducts);
-		});
+		if(discountsByProductId != null) {
+			discountsByProductId.values().stream()
+				.forEach(discounts -> discounts.forEach(Discount::initDiscountCalculation));
+			discountProducts(products, discountsByProductId);
+		}
 
 		return products.stream()
 				.mapToLong(Product::getPriceInCentsAfterDiscount)
 				.sum();
 	}
 
-	private Set<Discount> getDiscountsForDiscountTypes(Set<DiscountTypes> discuntTypes) {
-		return discuntTypes.stream()
-				.map(DiscountTypes::getActualDiscount)
-				.collect(toUnmodifiableSet());
+	private void discountProducts(Collection<Product> products, Map<String, Set<Discount>> discountsByProductId) {
+		discountsByProductId.entrySet().stream().forEach(entry -> {
+			List<Product> viableProducts = getProductsWithProductId(products, entry.getKey());
+			applyDiscountsOnProducts(entry.getValue(), viableProducts);
+		});
 	}
 
-	private List<Product> getProductsWithProductId(List<Product> products, String productId) {
+	private List<Product> getProductsWithProductId(Collection<Product> products, String productId) {
 		return products.stream()
 				.filter(p -> p.getId().equals(productId))
 				.collect(toList());

@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
-import org.warehouse.discount.DiscountTypes;
+import org.warehouse.discount.Discount;
 import org.warehouse.inventory.Inventory;
 import org.warehouse.product.Product;
 
@@ -16,7 +16,7 @@ public class Basket {
 	private TotalCalculator totalCalculator;
 
 	private List<Product> products = new ArrayList<>();
-	private Map<String, Set<DiscountTypes> > discountsByProductId = new HashMap<>();
+	private Map<String, Set<Discount> > discountByProductId = new HashMap<>();
 
 	public Basket(Inventory inventory, TotalCalculator totalCalculator) {
 		this.inventory = inventory;
@@ -27,9 +27,9 @@ public class Basket {
 		Optional<Product> possibleProduct = inventory.getProductById(productId);
 		possibleProduct.ifPresent(product -> {
 			products.add(product);
-			Set<DiscountTypes> discounts = discountsByProductId.getOrDefault(productId, new HashSet<>());
+			Set<Discount> discounts = discountByProductId.getOrDefault(productId, new HashSet<>());
 			discounts.addAll(product.getDiscounts());
-			getDiscountsByProductId().put(productId, discounts);
+			discountByProductId.put(productId, discounts);
 		});
 	}
 
@@ -38,11 +38,7 @@ public class Basket {
 	}
 
 	public long total() {
-		return totalCalculator.calculateTotalPriceInCents(this);
-	}
-
-	public Map<String, Set<DiscountTypes> > getDiscountsByProductId() {
-		return discountsByProductId;
+		return totalCalculator.calculateTotalPriceInCents(products, discountByProductId);
 	}
 
 }

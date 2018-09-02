@@ -2,12 +2,12 @@ package org.warehouse.product;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.warehouse.discount.DiscountTypes;
+import org.warehouse.discount.Discount;
 
 public class ProductType {
 	private final String id;
 	private final long priceInCents;
-	private final Set<DiscountTypes> discounts = new HashSet<>();
+	private final Set<Discount> discounts = new HashSet<>();
 
 	public ProductType(String id, long priceInCents) {
 		super();
@@ -15,11 +15,11 @@ public class ProductType {
 		this.priceInCents = priceInCents;
 	}
 	
-	public void addDiscount(DiscountTypes discount) {
+	public void addDiscount(Discount discount) {
 		this.discounts.add(discount);
 	}
 	
-	public Set<DiscountTypes> getDiscounts() {
+	public Set<Discount> getDiscounts() {
 		return discounts;
 	}
 

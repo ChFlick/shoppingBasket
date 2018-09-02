@@ -2,7 +2,7 @@ package org.warehouse.product;
 
 import java.util.Set;
 
-import org.warehouse.discount.DiscountTypes;
+import org.warehouse.discount.Discount;
 
 public class Product {
 	private ProductType productType;
@@ -17,7 +17,7 @@ public class Product {
 		this.priceInCentsAfterDiscount = productType.getPriceInCents();
 	}
 
-	public Set<DiscountTypes> getDiscounts() {
+	public Set<Discount> getDiscounts() {
 		return productType.getDiscounts();
 	}
 
