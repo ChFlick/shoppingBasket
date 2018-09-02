@@ -11,7 +11,7 @@ public class TwoForOneDiscount implements Discount {
 	
 	@Override
 	public void accept(Product product) {
-		if(productsProcessed % 2 == 1) {
+		if(productsProcessed % 2 != 0) {
 			product.setPriceInCentsAfterDiscount(0l);
 		}
 		

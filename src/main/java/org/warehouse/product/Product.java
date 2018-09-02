@@ -8,7 +8,7 @@ public class Product {
 	private ProductType productType;
 	private long priceInCentsAfterDiscount;
 
-	public Product(ProductType productType) {
+	Product(ProductType productType) {
 		this.productType = productType;
 		this.priceInCentsAfterDiscount = productType.getPriceInCents();
 	}
