@@ -4,8 +4,8 @@ import static org.junit.Assert.assertThat;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.warehouse.discount.TenPercentDiscount;
 import org.warehouse.product.Product;
+import org.warehouse.product.ProductType;
 
 public class TenPercentDiscountTest {
 
@@ -15,7 +15,7 @@ public class TenPercentDiscountTest {
 	@Before
 	public void setUp() {
 		tenPercentDiscount = new TenPercentDiscount();
-		testProduct = new Product("", 100);
+		testProduct = new ProductType("", 100).createProduct();
 	}
 
 	@Test

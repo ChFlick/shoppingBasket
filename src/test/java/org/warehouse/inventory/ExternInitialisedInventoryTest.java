@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.junit.Test;
 import org.warehouse.inventory.ExternInitialisedInventory;
 import org.warehouse.product.Product;
+import org.warehouse.product.ProductType;
 
 import com.google.common.collect.Sets;
 
@@ -18,14 +19,14 @@ public class ExternInitialisedInventoryTest {
 	
 	@Test
 	public void canBeCreatedWithProductTypes() throws Exception {
-		Product pType = new Product("t1",  100);
+		ProductType pType = new ProductType("t1",  100);
 		
 		new ExternInitialisedInventory(Sets.newHashSet(pType));
 	}
 	
 	@Test
 	public void idNotAvailableNoProduct() throws Exception {
-		Product pType = new Product("t1",  100);
+		ProductType pType = new ProductType("t1",  100);
 		
 		Inventory inventory = new ExternInitialisedInventory(Sets.newHashSet(pType));
 		
@@ -36,7 +37,7 @@ public class ExternInitialisedInventoryTest {
 	
 	@Test
 	public void idAvailableGetsProduct() throws Exception {
-		Product pType = new Product("t1",  100);
+		ProductType pType = new ProductType("t1",  100);
 		
 		Inventory inventory = new ExternInitialisedInventory(Sets.newHashSet(pType));
 		

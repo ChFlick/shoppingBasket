@@ -1,6 +1,6 @@
 package org.warehouse;
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
 import org.junit.Test;
 import org.warehouse.basket.Basket;
@@ -9,15 +9,15 @@ import org.warehouse.basket.TotalCalculatorWithDiscounts;
 import org.warehouse.discount.DiscountTypes;
 import org.warehouse.inventory.ExternInitialisedInventory;
 import org.warehouse.inventory.Inventory;
-import org.warehouse.product.Product;
+import org.warehouse.product.ProductType;
 
 import com.google.common.collect.Sets;
 
 public class WarehouseTest {
 
 	@Test
-	public void singleProductCanBeScanned() {
-		Product a1 = new Product("A001", 100);
+	public void singleProductTypeCanBeScanned() {
+		ProductType a1 = new ProductType("A001", 100);
 		Inventory inventory = new ExternInitialisedInventory(Sets.newHashSet(a1));
 		TotalCalculator totalCalculator = new TotalCalculatorWithDiscounts();
 		Basket basket = new Basket(inventory, totalCalculator);
@@ -28,9 +28,9 @@ public class WarehouseTest {
 	}
 	
 	@Test
-	public void multipleProductsCanBeScanned() {
-		Product a1 = new Product("A001", 100);
-		Product a2 = new Product("A002", 250);
+	public void multipleProductTypesCanBeScanned() {
+		ProductType a1 = new ProductType("A001", 100);
+		ProductType a2 = new ProductType("A002", 250);
 		Inventory inventory = new ExternInitialisedInventory(Sets.newHashSet(a1, a2));
 		TotalCalculator totalCalculator = new TotalCalculatorWithDiscounts();
 		Basket basket = new Basket(inventory, totalCalculator);
@@ -44,7 +44,7 @@ public class WarehouseTest {
 	
 	@Test
 	public void singleDiscountCanBeApplied() {
-		Product a1 = new Product("A001", 100);
+		ProductType a1 = new ProductType("A001", 100);
 		a1.addDiscount(DiscountTypes.TEN_PERCENT);
 		Inventory inventory = new ExternInitialisedInventory(Sets.newHashSet(a1));
 		TotalCalculator totalCalculator = new TotalCalculatorWithDiscounts();
@@ -56,8 +56,8 @@ public class WarehouseTest {
 	}
 	
 	@Test
-	public void singleDiscountCanBeAppliedOnMultipleProducts() {
-		Product a1 = new Product("A001", 100);
+	public void singleDiscountCanBeAppliedOnMultipleProductTypes() {
+		ProductType a1 = new ProductType("A001", 100);
 		a1.addDiscount(DiscountTypes.TEN_PERCENT);
 		Inventory inventory = new ExternInitialisedInventory(Sets.newHashSet(a1));
 		TotalCalculator totalCalculator = new TotalCalculatorWithDiscounts();
@@ -70,11 +70,11 @@ public class WarehouseTest {
 	}
 	
 	@Test
-	public void singleDiscountOnDifferentProducts() {
-		Product a1 = new Product("A001", 100);
+	public void singleDiscountOnDifferentProductTypes() {
+		ProductType a1 = new ProductType("A001", 100);
 		a1.addDiscount(DiscountTypes.TEN_PERCENT);
 		
-		Product a2 = new Product("A002", 50);
+		ProductType a2 = new ProductType("A002", 50);
 		a2.addDiscount(DiscountTypes.TEN_PERCENT);
 		
 		Inventory inventory = new ExternInitialisedInventory(Sets.newHashSet(a1, a2));
@@ -88,8 +88,8 @@ public class WarehouseTest {
 	}
 	
 	@Test
-	public void twoForOneDiscountCanBeAppliedWithTwoProducts() {
-		Product a1 = new Product("A001", 100);
+	public void twoForOneDiscountCanBeAppliedWithTwoProductTypes() {
+		ProductType a1 = new ProductType("A001", 100);
 		a1.addDiscount(DiscountTypes.TWO_FOR_ONE);
 		
 		Inventory inventory = new ExternInitialisedInventory(Sets.newHashSet(a1));
@@ -103,8 +103,8 @@ public class WarehouseTest {
 	}
 	
 	@Test
-	public void twoForOneDiscountCanBeAppliedWithThreeProducts() {
-		Product a1 = new Product("A001", 100);
+	public void twoForOneDiscountCanBeAppliedWithThreeProductTypes() {
+		ProductType a1 = new ProductType("A001", 100);
 		a1.addDiscount(DiscountTypes.TWO_FOR_ONE);
 		
 		Inventory inventory = new ExternInitialisedInventory(Sets.newHashSet(a1));
@@ -120,7 +120,7 @@ public class WarehouseTest {
 	
 	@Test
 	public void multipleDiscountsCanBeApplied() {
-		Product a1 = new Product("A001", 100);
+		ProductType a1 = new ProductType("A001", 100);
 		a1.addDiscount(DiscountTypes.TWO_FOR_ONE);
 		a1.addDiscount(DiscountTypes.TEN_PERCENT);
 		
@@ -137,7 +137,7 @@ public class WarehouseTest {
 	
 	@Test
 	public void theTotalSumCanBeCalculatedIntermediate() {
-		Product a1 = new Product("A001", 100);
+		ProductType a1 = new ProductType("A001", 100);
 		a1.addDiscount(DiscountTypes.TWO_FOR_ONE);
 		a1.addDiscount(DiscountTypes.TEN_PERCENT);
 		

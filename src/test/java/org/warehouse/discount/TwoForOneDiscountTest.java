@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.warehouse.discount.TwoForOneDiscount;
 import org.warehouse.product.Product;
+import org.warehouse.product.ProductType;
 
 public class TwoForOneDiscountTest {
 
@@ -19,9 +20,9 @@ public class TwoForOneDiscountTest {
 	@Before
 	public void setUp() {
 		twoForOneDiscount = new TwoForOneDiscount();
-		testProduct = new Product("", 100);
-		testProduct2 = new Product("", 100);
-		testProduct3 = new Product("", 100);
+		testProduct = new ProductType("", 100).createProduct();
+		testProduct2 = new ProductType("", 100).createProduct();
+		testProduct3 = new ProductType("", 100).createProduct();
 	}
 	
 	@Test

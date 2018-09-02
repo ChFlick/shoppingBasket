@@ -9,7 +9,7 @@ import java.util.Collections;
 import org.junit.Test;
 import org.warehouse.inventory.ExternInitialisedInventory;
 import org.warehouse.inventory.Inventory;
-import org.warehouse.product.Product;
+import org.warehouse.product.ProductType;
 
 import com.google.common.collect.Sets;
 
@@ -29,19 +29,19 @@ public class BasketTest {
 	
 	@Test
 	public void availableScannedProductGetsAdded() throws Exception {
-		Product testProduct = new Product("A1", 100);
+		ProductType testProduct = new ProductType("A1", 100);
 		inventory = new ExternInitialisedInventory(Sets.newHashSet(testProduct));
 		basket = new Basket(inventory, null);
 		
 		basket.scan("A1");
 		
 		assertThat(basket.getProducts().size(), is(1));
-		assertThat(basket.getProducts().get(0), is(equalTo(testProduct)));
+		assertThat(basket.getProducts().get(0), is(equalTo(testProduct.createProduct())));
 	}
 	
 	@Test
 	public void availableScannedProductGetsAddedMultipleTimes() throws Exception {
-		Product testProduct = new Product("A1", 100);
+		ProductType testProduct = new ProductType("A1", 100);
 		inventory = new ExternInitialisedInventory(Sets.newHashSet(testProduct));
 		basket = new Basket(inventory, null);
 		
@@ -49,7 +49,7 @@ public class BasketTest {
 		basket.scan("A1");
 		
 		assertThat(basket.getProducts().size(), is(2));
-		assertThat(basket.getProducts().get(0), is(equalTo(testProduct)));
-		assertThat(basket.getProducts().get(1), is(equalTo(testProduct)));
+		assertThat(basket.getProducts().get(0), is(equalTo(testProduct.createProduct())));
+		assertThat(basket.getProducts().get(1), is(equalTo(testProduct.createProduct())));
 	}
 }

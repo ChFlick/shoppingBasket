@@ -6,16 +6,17 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.warehouse.product.Product;
+import org.warehouse.product.ProductType;
 
 public class ExternInitialisedInventory implements Inventory {
-	private Map<String, Product> productByProductId;
+	private Map<String, ProductType> productTypesByProductId;
 
-	public ExternInitialisedInventory(Set<Product> products) {
-		if (products == null) {
-			productByProductId = Collections.emptyMap();
+	public ExternInitialisedInventory(Set<ProductType> productTypes) {
+		if (productTypes == null) {
+			productTypesByProductId = Collections.emptyMap();
 		} else {
-			this.productByProductId = products.stream()
-					.collect(Collectors.toUnmodifiableMap(Product::getId, p -> p));
+			this.productTypesByProductId = productTypes.stream()
+					.collect(Collectors.toUnmodifiableMap(ProductType::getId, p -> p));
 		}
 	}
 
@@ -24,7 +25,7 @@ public class ExternInitialisedInventory implements Inventory {
 	 */
 	@Override
 	public Optional<Product> getProductById(String id) {
-		return Optional.ofNullable(productByProductId.get(id)).map(Product::clone);
+		return Optional.ofNullable(productTypesByProductId.get(id)).map(ProductType::createProduct);
 	}
 
 }
